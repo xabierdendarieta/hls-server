@@ -9,6 +9,7 @@
   "author": "Grupo 5",
   "license": "ISC",
   "dependencies": {
-    "http-attach": "^1.0.0"
+    "http-attach": "^1.0.0",
+    "minimist": "^1.2.5"
   }
 }
