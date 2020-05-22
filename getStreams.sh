@@ -1,9 +1,13 @@
 mkdir src/output/more
 
-wget -x "link a small" -O "src/output/more/small.zip"
+wget -q --spider --save-cookies "src/output/more/cookies.txt" "https://gofile.io/d/siShhl"
 
-unzip -oq "src/output/more/more.zip" -d "src/output/"
+wget -x --load-cookies "src/output/more/cookies.txt" "https://srv-file14.gofile.io/download/siShhl/small.zip" -O "src/output/more/small.zip"
 
-wget -x "link a large" -O "src/output/more/large.zip"
+unzip -oq "src/output/more/small.zip" -d "src/output/more"
 
-unzip -oq "src/output/more/more.zip" -d "src/output/"
+wget -x --load-cookies "src/output/more/cookies.txt" "https://srv-file14.gofile.io/download/siShhl/large.zip" -O "src/output/more/large.zip"
+
+unzip -oq "src/output/more/large.zip" -d "src/output/more"
+
+rm "src/output/more/cookies.txt"
