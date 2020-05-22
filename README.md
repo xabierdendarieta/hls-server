@@ -11,7 +11,15 @@ Servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generació
 
 Se necesita tener instalado el paquete `git`.
 
-* `git https://github.com/xabierdendarieta/hls-server.git`
+* `git clone https://github.com/xabierdendarieta/hls-server.git`
+
+O simplemente descargar desde la web y descomprimir.
+
+Despues habrá que instalar las dependencias de `npm`:
+
+* `npm install`
+
+Con esto ya estaría todo listo para ejecutarse.
 
 ## Crear un archivo de streaming
 
