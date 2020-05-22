@@ -7,8 +7,11 @@ module.exports.html = `
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <video controls id="video"></video>
     <br>
-    <input type="text" />
-    <button id="load">Load</button>
+
+    <br>
+    <button id="loadTest">Test</button>
+    <button id="loadSmall">Small</button>
+    <button id="loadLarge">Large</button>
 
     <script>
       if(Hls.isSupported()) {
@@ -20,8 +23,14 @@ module.exports.html = `
           video.play();
         });
 
-        document.querySelector("#load").addEventListener("click", function () {
-          hls.loadSource('output/' + document.querySelector("input").value);
+        document.querySelector("#loadTest").addEventListener("click", function () {
+          hls.loadSource('output/stream.m3u8');
+        })
+        document.querySelector("#loadSmall").addEventListener("click", function () {
+          hls.loadSource('output/more/small/stream.m3u8');
+        })
+        document.querySelector("#loadLarge").addEventListener("click", function () {
+          hls.loadSource('output/more/large/stream.m3u8');
         })
      }
     </script>

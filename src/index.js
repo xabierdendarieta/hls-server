@@ -55,7 +55,7 @@ HLSServer.prototype._middleware = function (req, res, next) {
   var ae = req.headers['accept-encoding'] || ''
   req.acceptsCompression = ae.match(/\bgzip\b/)
 
-  if (uri === '/player.html' && self.player) {
+  if ((uri === '/player.html' && self.player) || (uri === '/' && self.player)) {
     self._writeplayer(res, next)
     return
   }
