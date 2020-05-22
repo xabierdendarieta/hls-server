@@ -4,14 +4,14 @@ Servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generació
 
 ## Requisitos previos
 
-	* Maquina con Linux.
-	* Paquetes `npm` y `nodejs-legacy` instalados.
+* Maquina con Linux.
+* Paquetes `npm` y `nodejs-legacy` instalados.
 
 ## Clonar el repositorio
 
 Se necesita tener instalado el paquete `git`.
 
-	* `git https://github.com/xabierdendarieta/hls-server.git`
+* `git https://github.com/xabierdendarieta/hls-server.git`
 
 ## Crear un archivo de streaming
 
