@@ -7,6 +7,9 @@ var zlib = require('zlib')
 var httpAttach = require('http-attach')
 var fsProvider = require('./fsProvider')
 var player = require('./player')
+var fs = require('fs');
+var startPoint = Date.now();
+var time;
 
 var CONTENT_TYPE = {
   MANIFEST: 'application/vnd.apple.mpegurl',
@@ -70,9 +73,13 @@ HLSServer.prototype._middleware = function (req, res, next) {
     } else {
       switch (extension) {
         case '.m3u8':
+	  time = (Date.now() - startPoint) / 1000;
+	  fs.appendFile('log.txt','\n Video request: ' + req.filePath + ' at: ' + time + ' seconds\n');
           self._writeManifest(req, res, next)
           break
         case '.ts':
+	  time = (Date.now() - startPoint) / 1000;
+	  fs.appendFile('log.txt','   TS request:' + req.filePath +' at: ' + time + ' seconds\n');
           self._writeSegment(req, res, next)
           break
         default:
