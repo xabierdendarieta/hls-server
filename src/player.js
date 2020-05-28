@@ -13,7 +13,8 @@ module.exports.html = `
 		<button id="loadTest">Test</button>
 		<button id="loadSmall">Small</button>
 		<button id="loadLarge">Large</button>
-		<button id="loadLive">Live (Fake)</button>
+		<button id="loadLive">Live</button>
+		<button id="loadFakeLive">Live (Fake)</button>
 
 		<script>
 			if(Hls.isSupported()) {
@@ -36,6 +37,9 @@ module.exports.html = `
 				})
 				document.querySelector("#loadLive").addEventListener("click", function () {
 					hls.loadSource('output/more/live/stream.m3u8');
+				})
+				document.querySelector("#loadFakeLive").addEventListener("click", function () {
+					hls.loadSource('output/more/fake/stream.m3u8');
 				})
 			}
 		</script>
