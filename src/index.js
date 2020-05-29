@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = HLSServer
 
 var http = require('http')
@@ -9,7 +11,9 @@ var fsProvider = require('./fsProvider')
 var player = require('./player')
 var fs = require('fs');
 var startPoint = Date.now();
-var time;
+let time;
+
+fs.appendFile('log.csv','event,request,time\n');
 
 var CONTENT_TYPE = {
   MANIFEST: 'application/vnd.apple.mpegurl',
@@ -59,6 +63,8 @@ HLSServer.prototype._middleware = function (req, res, next) {
   req.acceptsCompression = ae.match(/\bgzip\b/)
 
   if ((uri === '/player.html' && self.player) || (uri === '/' && self.player)) {
+    time = (Date.now() - startPoint) / 1000;
+    fs.appendFile('log.csv','home,' + req.filePath + ',' + time + '\n');
     self._writeplayer(res, next)
     return
   }
@@ -74,12 +80,12 @@ HLSServer.prototype._middleware = function (req, res, next) {
       switch (extension) {
         case '.m3u8':
 	  time = (Date.now() - startPoint) / 1000;
-	  fs.appendFile('log.txt','\n Video request: ' + req.filePath + ' at: ' + time + ' seconds\n');
+	  fs.appendFile('log.csv','m3u8,' + req.filePath + ',' + time + '\n');
           self._writeManifest(req, res, next)
           break
         case '.ts':
 	  time = (Date.now() - startPoint) / 1000;
-	  fs.appendFile('log.txt','   TS request:' + req.filePath +' at: ' + time + ' seconds\n');
+	  fs.appendFile('log.csv','ts,' + req.filePath + ',' + time + '\n');
           self._writeSegment(req, res, next)
           break
         default:
