@@ -1,8 +1,10 @@
 # Servidor HLS
 
-En este respositorio está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación (Universidad Pública de Navarra), desarrollado por el Grupo 5.
+En este respositorio está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra
 
-El servidor está basado en el de otro repositorio.
+Ha sido desarrollado por el Grupo 5, compuesto por Idoia Cerro, Xabier Dendarieta y Sonia Elizondo.
+
+El servidor es una modificación del [repositorio de T. Mullen](https://github.com/t-mullen/hls-server).
 
 ## Requisitos previos
 
@@ -15,17 +17,21 @@ En primer lugar, habrá que instalar las dependencias de `npm`:
 
 * `npm install`
 
-Con esto ya estaría todo listo para ejecutarse. Aunque falta obtener varios archivos de stream adicionales.
+Con esto, ya estaría todo listo para ejecutarse. Aunque falta obtener [varios archivos de stream adicionales](#archivos-provistos).
 
 ## Crear un archivo de streaming
 
 Se necesita previamente tener instalado `ffmpeg`, que es una librería de tratamiento de audio y video. Mayormente se utiliza para conversión de formatos, como haremos en nuestro caso, aunque incluye más funcionalidades.
 
+Es importante que, dentro de los parámetros que vamos a utilizar para convertir los videos a streams, tengamos siempre `pix_ftm yuv420p`, ya que el protocolo HLS parece sensible a este tipo de codificación de pixel.
+
 ### Preprocesado de video con anterioridad
 
-Para convertir un **arvhico MP4** (parámetros entre corchetes opcionales):
+Para convertir un **archivo MP4** (parámetros entre corchetes opcionales):
 
 * `ffmpeg -i archivo.mp4 [-vf scale=640:480] -f hls -c:v h264 -profile:v baseline -pix_fmt yuv420p -hls_time 5 -hls_list_size 0 stream.m3u8`
+
+El parámetro `hls_time` controla el tiempo medio de duración de los segmentos temporales que se vayan generando. Es un parámetro importante a tener en cuenta para el rendimiento del servidor: cuanto más grande, más tarda en servir; cuanto más pequeño, más veces tiene que servir.
 
 ### Preprocesado de video en directo
 
@@ -37,29 +43,33 @@ Para grabar directamente desde la **camara web**:
 
 En nuestro caso en lugar de utilizar una webcam, hemos obtado por grabar el escritorio de la maquina virtual, lo que nos parecio una opción más viable que el conseguir conectar una camara a la propia maquina virutal.
 
-* Para grabar la pantalla haremos: `TODO`
+* Para grabar la pantalla, habrá que adaptar el parámetro `video_size` por la resolución de la maquina donde se ejecute: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 stream.m3u8`
 
 ### Archivos provistos
 
-En el repositorio se ha provisto un script en bash, llamado `getStreams.sh`, que descarga los streams extra. Si no se ejecuta, solo se tiene el de test. Para ejecutar se necesitan `wget` y `unzip` previamente.
+En el repositorio se ha provisto un script en bash, llamado `getStreams.sh`, que descarga los streams extra. Si no se ejecutan, solo se tiene el de test. Para ejecutar se necesitan `wget` y `unzip` previamente.
 
-También se ha provisto de un video para falso directo, con la intención de generar el stream conforme se van sirviendo los segmentos temporales. Este archivo habrá que ir transformandolo en stream en directo mediante `ffmpeg`:
+También se ha provisto de un video para falso directo, obtenible con el script `getFakeLive.sh`, con la intención de generar el stream conforme se van sirviendo los segmentos temporales. Este archivo habrá que ir transformandolo en stream en directo mediante `ffmpeg`.
 
-* `COMANDO AQUI UWU`
+Con objetivo de hacer el procesado en directo, tanto de la grabación de pantalla como el archivo en falso directo, se ha provisto de los scripts `startLiveStream.sh` y `startFakeLiveStream.sh`. Estos archivos simplemente generan la estructura de carpetas necesaria y lanzan el comando de `ffmpeg` necesario en cada caso.
 
-_NOTA: en caso de que los scripts fallen o no descarguen el contenido debido, acceder a las siguientes webs desde un navegador:_
+* El comando para **directo real** (grabación de pantalla) es: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 "src/output/more/live/stream.m3u8"`
+
+* El comando para **falso directo** (archivo MP4) es: `ffmpeg -i "src/output/more/fake_live.mp4" -vf scale=640:480 -f hls -c:v h264 -profile:v baseline -pix_fmt yuv420p -hls_time 1 -strict experimental "src/output/more/fake/stream.m3u8"`
+
+_NOTA: en caso de que los scripts de descarga fallen o no descarguen el contenido debido, acceder a las siguientes webs desde un navegador:_
 
 * _Para los streams small y large: https://gofile.io/d/siShhl_
 
 * _Para el video fake\_live.mp4: https://gofile.io/d/L5i3VT_
 
-_Tras ese acceso, los scripts deberían funcionar correctamente._
+_Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que los archivos sigan en linea._
 
 ## Poner en marcha el server
 
 * Acceder hasta la carpeta `src`
 
-* Utilizar comando: `node app.js`
+* Utilizar el comando: `node app.js`
 
 * Acceder a: http://localhost:8000/ o http://localhost:8000/player.html y clickar en el stream deseado (Funciona en Opera, Firefox y Chrome sin necesidad de extensiones)
 
@@ -76,3 +86,5 @@ Para probar el protocolo HSL y su comportamiento hemos decidido probar las sigui
 * Pruebas con dos clientes simultaneos:
 
 	* 
+
+El servidor está preparado para loguear la información que se va generando sobre las peticiones en un archivo llamado `log.csv`.
