@@ -8,7 +8,7 @@ El servidor es una modificación del [repositorio de T. Mullen](https://github.c
 
 ## Requisitos previos
 
-* Maquina con Linux.
+* Máquina con Linux.
 * Paquetes `npm` y `nodejs-legacy` instalados.
 
 ## Inicialización
@@ -21,11 +21,11 @@ Con esto, ya estaría todo listo para ejecutarse. Aunque falta obtener [varios a
 
 ## Crear un archivo de streaming
 
-Se necesita previamente tener instalado `ffmpeg`, que es una librería de tratamiento de audio y video. Mayormente se utiliza para conversión de formatos, como haremos en nuestro caso, aunque incluye más funcionalidades.
+Se necesita previamente tener instalado `ffmpeg`, que es una librería de tratamiento de audio y vídeo. Generalmente se utiliza para conversión de formatos, como haremos en nuestro caso, aunque incluye más funcionalidades.
 
-Es importante que, dentro de los parámetros que vamos a utilizar para convertir los videos a streams, tengamos siempre `pix_ftm yuv420p`, ya que el protocolo HLS parece sensible a este tipo de codificación de pixel.
+Es importante que, dentro de los parámetros que vamos a utilizar para convertir los vídeos a streams, tengamos siempre `pix_ftm yuv420p`, ya que el protocolo HLS parece sensible a este tipo de codificación de píxel.
 
-### Preprocesado de video con anterioridad
+### Preprocesado de vídeo con anterioridad
 
 Para convertir un **archivo MP4** (parámetros entre corchetes opcionales):
 
@@ -33,25 +33,25 @@ Para convertir un **archivo MP4** (parámetros entre corchetes opcionales):
 
 El parámetro `hls_time` controla el tiempo medio de duración de los segmentos temporales que se vayan generando. Es un parámetro importante a tener en cuenta para el rendimiento del servidor: cuanto más grande, más tarda en servir; cuanto más pequeño, más veces tiene que servir.
 
-### Preprocesado de video en directo
+### Preprocesado de vídeo en directo
 
-Para grabar directamente desde la **camara web**:
+Para grabar directamente desde la **cámara web**:
 
-* Primero listar los dispositivos con: `ffmpeg -list_devices true -f dshow -i dummy`
+* Primero, listar los dispositivos con: `ffmpeg -list_devices true -f dshow -i dummy`
 
-* Luego para comenzar comando: `ffmpeg -f dshow -i video= "<dispositivo de la lista>" -vf scale=640:480 -f hls -c:v h264 -profile:v baseline -pix_fmt yuv420p -hls_time 1 stream.m3u8`
+* Luego, para comenzar, utilizar el comando: `ffmpeg -f dshow -i video= "<dispositivo de la lista>" -vf scale=640:480 -f hls -c:v h264 -profile:v baseline -pix_fmt yuv420p -hls_time 1 stream.m3u8`
 
-En nuestro caso en lugar de utilizar una webcam, hemos obtado por grabar el escritorio de la maquina virtual, lo que nos parecio una opción más viable que el conseguir conectar una camara a la propia maquina virutal.
+En nuestro caso en lugar de utilizar una webcam, hemos obtado por grabar el escritorio de la máquina virtual, lo que nos pareció una opción más viable que el conseguir conectar una cámara a la propia máquina virtual.
 
-* Para grabar la pantalla, habrá que adaptar el parámetro `video_size` por la resolución de la maquina donde se ejecute: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 stream.m3u8`
+* Para grabar la pantalla, habrá que adaptar el parámetro `video_size` por la resolución de la máquina donde se ejecute: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 stream.m3u8`
 
 ### Archivos provistos
 
-En el repositorio se ha provisto un script en bash, llamado `getStreams.sh`, que descarga los streams extra. Si no se ejecutan, solo se tiene el de test. Para ejecutar se necesitan `wget` y `unzip` previamente.
+En el repositorio se ha provisto un script en bash, llamado `getStreams.sh`, que descarga los streams extra. Si no se ejecutan, sólo se tiene el de test. Para ejecutar se necesitan `wget` y `unzip` previamente.
 
-También se ha provisto de un video para falso directo, obtenible con el script `getFakeLive.sh`, con la intención de generar el stream conforme se van sirviendo los segmentos temporales. Este archivo habrá que ir transformandolo en stream en directo mediante `ffmpeg`.
+También se ha provisto de un vídeo para falso directo, obtenible con el script `getFakeLive.sh`, con la intención de generar el stream conforme se van sirviendo los segmentos temporales. Este archivo habrá que ir transformándolo en stream en directo mediante `ffmpeg`.
 
-Con objetivo de hacer el procesado en directo, tanto de la grabación de pantalla como el archivo en falso directo, se ha provisto de los scripts `startLiveStream.sh` y `startFakeLiveStream.sh`. Estos archivos simplemente generan la estructura de carpetas necesaria y lanzan el comando de `ffmpeg` necesario en cada caso.
+Con objetivo de hacer el procesado en directo, tanto de la grabación de pantalla como del archivo en falso directo, se ha provisto de los scripts `startLiveStream.sh` y `startFakeLiveStream.sh`. Estos archivos simplemente generan la estructura de carpetas necesaria y lanzan el comando de `ffmpeg` necesario en cada caso.
 
 * El comando para **directo real** (grabación de pantalla) es: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 "src/output/more/live/stream.m3u8"`
 
@@ -71,7 +71,7 @@ _Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que 
 
 * Utilizar el comando: `node app.js`
 
-* Acceder a: http://localhost:8000/ o http://localhost:8000/player.html y clickar en el stream deseado (Funciona en Opera, Firefox y Chrome sin necesidad de extensiones)
+* Acceder a: http://localhost:8000/ o http://localhost:8000/player.html y hacer click en el stream deseado (Funciona en Opera, Firefox y Chrome sin necesidad de extensiones)
 
 	* En caso de acceso externo al servidor, puede utilizarse la IPv6 configurada con la VPN de la asignatura: `http://[2001:720:1d10:fffe::1000:5]:8000/`
 
@@ -79,12 +79,12 @@ _Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que 
 
 Para probar el protocolo HSL y su comportamiento hemos decidido probar las siguientes situaciones:
 
-* Pruebas con un único cliente conectandose:
+* Pruebas con un único cliente conectándose:
 
 	* 
 
-* Pruebas con dos clientes simultaneos:
+* Pruebas con dos clientes simultáneos:
 
 	* 
 
-El servidor está preparado para loguear la información que se va generando sobre las peticiones en un archivo llamado `log.csv`.
+El servidor está preparado para resgitrar en _logs_ la información que se va generando sobre las peticiones en un archivo llamado `log.csv`.
