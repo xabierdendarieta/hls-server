@@ -1,6 +1,6 @@
 # Servidor HLS
 
-En este respositorio está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra
+En [este respositorio](https://github.com/xabierdendarieta/hls-server) está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra
 
 Ha sido desarrollado por el Grupo 5, compuesto por Idoia Cerro, Xabier Dendarieta y Sonia Elizondo.
 
@@ -77,14 +77,34 @@ _Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que 
 
 ## Pruebas realizadas
 
-Para probar el protocolo HSL y su comportamiento hemos decidido probar las siguientes situaciones:
+Para probar el protocolo HSL y su comportamiento hemos decidido probar varias siguientes situaciones, en primer lugar, con un único cliente accediendo y, en segundo lugar, con dos clientes.
 
-* Pruebas con un único cliente conectándose:
+### Pruebas con un único cliente conectándose
 
-	* 
+* Tres accesos al **vídeo test**.
 
-* Pruebas con dos clientes simultáneos:
+* Tres accesos al **vídeo small**.
 
-	* 
+* Tres accesos al **vídeo large**, realizando varios saltos para obligar a cargar zonas nuevas del vídeo en desorden.
 
-El servidor está preparado para resgitrar en _logs_ la información que se va generando sobre las peticiones en un archivo llamado `log.csv`.
+* Un acceso al **stream fake live**, realizando saltos en la zona visible del reproductor.
+
+* Un acceso al **stream live**, realizando saltos en la zona visible del reproductor.
+
+Las pruebas con un único cliente han sido realizadas en **Firefox (x32)** y en **Chromium (x32)**, lo más parecidas posibles, con el fin de verificar si hay diferencias entre las implementaciones del protocolo HLS entre ambos navegadores.
+
+### Pruebas con dos clientes simultáneos
+
+* Tres accesos al **vídeo test**.
+
+* Tres accesos al **vídeo small**, realizando algun salto (en la medida de lo posible, ya que solo dura dos minutos).
+
+* Un acceso al **stream fake live**, realizando saltos en la zona visible del reproductor.
+
+* Un acceso al **stream live**, realizando saltos en la zona visible del reproductor.
+
+En el caso de las pruebas para dos clientes simultáneos, solo se han realizado en **Firefox (x32)**, ya que en este caso se buscaba ver el comportamiento del servidor ante esta situación. También se ha procurado que haya un pequeño margen entre la petición del primer cliente y la del segundo, para poder resaltar más la posible diferencia.
+
+### Registro de accesos
+
+Con intención de facilitar el análisis de los resultados y su representación, el servidor está preparado para resgitrar en _logs_ la información que se va generando sobre las peticiones en un archivo llamado `log.csv`.
