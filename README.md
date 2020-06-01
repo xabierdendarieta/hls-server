@@ -2,7 +2,7 @@
 
 En [este respositorio](https://github.com/xabierdendarieta/hls-server) está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra.
 
-Ha sido desarrollado por el Grupo 5, compuesto por Idoia Cerro, Xabier Dendarieta y Sonia Elizondo.
+Ha sido desarrollado por el Grupo 5, compuesto por Idoia Cerro, Xabier Dendarieta y Sonia Elizondo. Puede verse el vídeo explicativo en [Youtube](https://youtu.be/2Jo96vw0Agw).
 
 El servidor es una modificación del [repositorio de T. Mullen](https://github.com/t-mullen/hls-server).
 
@@ -97,7 +97,9 @@ Las pruebas con un único cliente han sido realizadas en **Firefox (x32)** y en 
 
 * Tres accesos al **vídeo test**.
 
-* Tres accesos al **vídeo small**, realizando algún salto (en la medida de lo posible, ya que solo dura dos minutos).
+* Tres accesos al **vídeo small**.
+
+* Tres accesos al **vídeo large**, realizando varios saltos para obligar a cargar zonas nuevas del vídeo en desorden.
 
 * Un acceso al **stream fake live**, realizando saltos en la zona visible del reproductor.
 
