@@ -1,6 +1,6 @@
 # Servidor HLS
 
-En [este respositorio](https://github.com/xabierdendarieta/hls-server) está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra
+En [este respositorio](https://github.com/xabierdendarieta/hls-server) está contenido el servidor para el Trabajo 2 de la asignatura Redes y Sistemas de Nueva Generación, de la Universidad Pública de Navarra.
 
 Ha sido desarrollado por el Grupo 5, compuesto por Idoia Cerro, Xabier Dendarieta y Sonia Elizondo.
 
