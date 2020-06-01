@@ -41,7 +41,7 @@ Para grabar directamente desde la **cámara web**:
 
 * Luego, para comenzar, utilizar el comando: `ffmpeg -f dshow -i video= "<dispositivo de la lista>" -vf scale=640:480 -f hls -c:v h264 -profile:v baseline -pix_fmt yuv420p -hls_time 1 stream.m3u8`
 
-En nuestro caso en lugar de utilizar una webcam, hemos obtado por grabar el escritorio de la máquina virtual, lo que nos pareció una opción más viable que el conseguir conectar una cámara a la propia máquina virtual.
+En nuestro caso en lugar de utilizar una webcam, hemos optado por grabar el escritorio de la máquina virtual, lo que nos pareció una opción más viable que el conseguir conectar una cámara a la propia máquina virtual.
 
 * Para grabar la pantalla, habrá que adaptar el parámetro `video_size` por la resolución de la máquina donde se ejecute: `ffmpeg -video_size 1440x900 -f x11grab -i :0.0 -f hls -pix_fmt yuv420p -vf scale=900:500 stream.m3u8`
 
@@ -63,7 +63,7 @@ _NOTA: en caso de que los scripts de descarga fallen o no descarguen el contenid
 
 * _Para el video fake\_live.mp4: https://gofile.io/d/L5i3VT_
 
-_Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que los archivos sigan en linea._
+_Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que los archivos sigan en línea._
 
 ## Poner en marcha el server
 
@@ -77,7 +77,7 @@ _Tras ese acceso, dichos scripts deberían funcionar correctamente, siempre que 
 
 ## Pruebas realizadas
 
-Para probar el protocolo HSL y su comportamiento hemos decidido probar varias siguientes situaciones, en primer lugar, con un único cliente accediendo y, en segundo lugar, con dos clientes.
+Para probar el protocolo HSL y su comportamiento hemos decidido probar varias situaciones: en primer lugar, con un único cliente accediendo y, en segundo lugar, con dos clientes.
 
 ### Pruebas con un único cliente conectándose
 
@@ -97,7 +97,7 @@ Las pruebas con un único cliente han sido realizadas en **Firefox (x32)** y en 
 
 * Tres accesos al **vídeo test**.
 
-* Tres accesos al **vídeo small**, realizando algun salto (en la medida de lo posible, ya que solo dura dos minutos).
+* Tres accesos al **vídeo small**, realizando algún salto (en la medida de lo posible, ya que solo dura dos minutos).
 
 * Un acceso al **stream fake live**, realizando saltos en la zona visible del reproductor.
 
